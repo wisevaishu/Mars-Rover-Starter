@@ -8,5 +8,10 @@ class Command {
    }
  
  }
+
+ let modeCommand = new Command('MODE_CHANGE', 'LOW_POWER');
+let moveCommand = new Command('MOVE', 12000);
+
+
  
  module.exports = Command;
