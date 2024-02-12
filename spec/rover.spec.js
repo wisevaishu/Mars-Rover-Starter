@@ -70,14 +70,7 @@ describe("Rover class", function() {
     for(let i=0;i<response.results.length;i++){
       if (message.commands[i].commandType === 'MODE_CHANGE'){
         expect(response.results[i].completed).toBe(true);
-        if(message.commands[i].value==="LOW_POWER")
-        {
-          expect(rover.mode).toBe("Can’t be moved in this state.");
-        }
-        if(message.commands[i].value==="NORMAL")
-        {
-          expect(rover.mode).toBe("none");
-        }
+        expect(rover.mode).toBe("LOW_POWER");
       }
     }    
   });
@@ -91,17 +84,27 @@ describe("Rover class", function() {
   let response = rover.receiveMessage(message);
 
     for(let i=0;i<response.results.length;i++){
-      expect(response.results[i].completed).toBe(true);
-      console.log(response.results[i].roverStatus);
-      if (message.commands[i].commandType === 'MODE_CHANGE'){
-        if(message.commands[i].value==="LOW_POWER"){
-          expect(this.mode).toBe("Can’t be moved in this state.");
-        }
-        if(message.commands[i].value==="NORMAL"){
-          expect(this.mode).toBe("None");
+      if (message.commands[i].commandType === 'MOVE'){
+        if (this.mode === 'LOW_POWER'){
+          expect(response.results[i].completed).toBe(false);
+          expect(JSON.parse(response.results[j].roverStatus).position=this.position);
         }
       }
     }
   });  
 
+  //Test 13
+  it("responds with the position for the move command", function() {
+    let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+    let message = new Message('Test message with two commands', commands);
+    let rover = new Rover(98382);  
+    let response = rover.receiveMessage(message);    
+    
+    for(let i=0;i<response.results.length;i++){
+      if (message.commands[i].commandType === 'MOVE'){
+        expect(JSON.parse(response.results[j].roverStatus).position).toBe(rover.position);
+      }
+    }
+
+  });
 });

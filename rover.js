@@ -31,8 +31,14 @@ class Rover{
 
          else if (messageObj.commands[i].commandType === 'MOVE'){
             let tempObj = {};
-            tempObj["completed"] = true;
-            this.position = messageObj.commands[i].value;
+            //if (messageObj.commands[i].value === 'LOW_POWER'){
+            if (this.mode == "LOW_POWER"){
+               tempObj["completed"] = false;
+            }
+            else{
+               tempObj["completed"] = true;
+               this.position = messageObj.commands[i].value;
+            }
             resultArray.push(tempObj);
          }
          
@@ -40,14 +46,7 @@ class Rover{
          {
             let tempObj = {};
             tempObj["completed"] = true;
-            if(messageObj.commands[i].value==="LOW_POWER")
-            {
-               this.mode = "Can’t be moved in this state.";
-            }
-            if(messageObj.commands[i].value==="NORMAL")
-            {
-               this.mode = "none";
-            }
+            this.mode = messageObj.commands[i].value;
             resultArray.push(tempObj);
          }
 
@@ -67,13 +66,33 @@ class Rover{
     }
    }
 
-   let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
-   let message = new Message('Test message with two commands', commands);
-   let rover = new Rover(98382);    // Passes 98382 as the rover's position.
-   let response = rover.receiveMessage(message);
+   // let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+   // let message = new Message('Test message with two commands', commands);
+   // let rover = new Rover(98382);    // Passes 98382 as the rover's position.
+   // let response = rover.receiveMessage(message);
 
-   console.log(response);
+   // console.log(response);
+
+   // let rover = new Rover(100);
+   // let commands = [
+   //    new Command('MOVE', 4321),
+   //    new Command('STATUS_CHECK'),
+   //    new Command('MODE_CHANGE', 'LOW_POWER'),
+   //    new Command('MOVE', 3579),
+   //    new Command('STATUS_CHECK')
+   // ];
    
-   
-   
+   // let message = new Message('TA power', commands);
+   // let response = rover.receiveMessage(message);
+
+   //  console.log(response);
+
+   // console.log(response.message = 'TA power');
+   // console.log(response.results[0].completed == true);
+   // console.log(JSON.parse(response.results[1].roverStatus).position == 4321);
+   // console.log(response.results[2].completed == true);
+   // console.log(response.results[3].completed == false);
+   // console.log(JSON.parse(response.results[1].roverStatus).position == 4321);
+   // console.log(JSON.parse(response.results[4].roverStatus).mode=='LOW_POWER');
+   // console.log(JSON.parse(response.results[4].roverStatus).generatorWatts == 110);
 module.exports = Rover;
