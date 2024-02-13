@@ -10,13 +10,13 @@ const Command = require('../command.js');
 
 describe("Rover class", function() {
 
-
   // 7 tests here!
   //Test 7
   it("constructor sets position and default values for mode and generatorWatts", function() {
     let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
     let message = new Message('Test message with two commands', commands);
-    let rover = new Rover(98382);  
+    let rover = new Rover(98382); 
+
     expect(rover.position).toBe(98382);
     expect(rover.mode).toBe('NORMAL');
     expect(rover.generatorWatts).toBe(110);
@@ -26,8 +26,9 @@ describe("Rover class", function() {
   it("response returned by receiveMessage contains the name of the message", function() {
     let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
     let message = new Message('Test message with two commands', commands);
-    let rover = new Rover(98382);  
+    let rover = new Rover(98382); 
     let response = rover.receiveMessage(message);
+
     expect(response.message).toBe('Test message with two commands');
   });
 
@@ -37,6 +38,7 @@ describe("Rover class", function() {
     let message = new Message('Test message with two commands', commands);
     let rover = new Rover(98382);  
     let response = rover.receiveMessage(message);
+
     expect(response.results.length).toBe(commands.length);
   });
 
@@ -46,15 +48,19 @@ describe("Rover class", function() {
     let message = new Message('Test message with two commands', commands);
     let rover = new Rover(98382);  
     let response = rover.receiveMessage(message);
+
     for(let i=0;i<message.commands.length;i++){
       if (message.commands[i].commandType === 'STATUS_CHECK'){
          for(let j=0;j<response.results.length;j++){
-            console.log(Object.keys(response.results[j]).length);
             if(Object.keys(response.results[j]).length>1)
             {
-              expect(JSON.parse(response.results[j].roverStatus).mode).toBe(rover.mode);
-              expect(JSON.parse(response.results[j].roverStatus).generatorWatts).toBe(rover.generatorWatts);
-              expect(JSON.parse(response.results[j].roverStatus).position).toBe(rover.position);
+              // expect(JSON.parse(response.results[j].roverStatus).mode).toBe(rover.mode);
+              // expect(JSON.parse(response.results[j].roverStatus).generatorWatts).toBe(rover.generatorWatts);
+              // expect(JSON.parse(response.results[j].roverStatus).position).toBe(rover.position);
+
+              expect(response.results[j].roverStatus.mode).toBe(rover.mode);
+              expect(response.results[j].roverStatus.generatorWatts).toBe(rover.generatorWatts);
+              expect(response.results[j].roverStatus.position).toBe(rover.position);
             }
          }
       }
