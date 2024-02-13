@@ -20,21 +20,21 @@ describe("GRADING TEST: ", function() {
     expect(response.message).toEqual('TA power');
     expect(response.results[0].completed).toBeTruthy();
     
-    expect(response.results[1].roverStatus.position).toEqual(4321);
-    //expect(JSON.parse(response.results[1].roverStatus).position).toEqual(4321);
+    //expect(response.results[1].roverStatus.position).toEqual(4321);
+    expect(JSON.parse(response.results[1].roverStatus).position).toEqual(4321);
     
 
     expect(response.results[2].completed).toBeTruthy();
     expect(response.results[3].completed).toBeFalsy();
 
-    expect(response.results[4].roverStatus.position).toEqual(4321);
-    //expect(JSON.parse(response.results[4].roverStatus).position).toEqual(4321);
+    //expect(response.results[4].roverStatus.position).toEqual(4321);
+    expect(JSON.parse(response.results[4].roverStatus).position).toEqual(4321);
 
-    expect(response.results[4].roverStatus.mode).toEqual('LOW_POWER');
-    //expect(JSON.parse(response.results[4].roverStatus).mode).toEqual('LOW_POWER');
+    //expect(response.results[4].roverStatus.mode).toEqual('LOW_POWER');
+    expect(JSON.parse(response.results[4].roverStatus).mode).toEqual('LOW_POWER');
 
-    expect(response.results[4].roverStatus.generatorWatts).toEqual(110);
-    //expect(JSON.parse(response.results[4].roverStatus).generatorWatts).toEqual(110);
+    //expect(response.results[4].roverStatus.generatorWatts).toEqual(110);
+    expect(JSON.parse(response.results[4].roverStatus).generatorWatts).toEqual(110);
 
    });
 

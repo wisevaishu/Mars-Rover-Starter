@@ -54,13 +54,13 @@ describe("Rover class", function() {
          for(let j=0;j<response.results.length;j++){
             if(Object.keys(response.results[j]).length>1)
             {
-              // expect(JSON.parse(response.results[j].roverStatus).mode).toBe(rover.mode);
-              // expect(JSON.parse(response.results[j].roverStatus).generatorWatts).toBe(rover.generatorWatts);
-              // expect(JSON.parse(response.results[j].roverStatus).position).toBe(rover.position);
+              expect(JSON.parse(response.results[j].roverStatus).mode).toBe(rover.mode);
+              expect(JSON.parse(response.results[j].roverStatus).generatorWatts).toBe(rover.generatorWatts);
+              expect(JSON.parse(response.results[j].roverStatus).position).toBe(rover.position);
 
-              expect(response.results[j].roverStatus.mode).toBe(rover.mode);
-              expect(response.results[j].roverStatus.generatorWatts).toBe(rover.generatorWatts);
-              expect(response.results[j].roverStatus.position).toBe(rover.position);
+              // expect(response.results[j].roverStatus.mode).toBe(rover.mode);
+              // expect(response.results[j].roverStatus.generatorWatts).toBe(rover.generatorWatts);
+              // expect(response.results[j].roverStatus.position).toBe(rover.position);
             }
          }
       }
